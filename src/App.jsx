@@ -36,7 +36,15 @@ class App extends Component {
       this.setState({messages: messages})
     }, 3000);
     this.connection.onopen = function (event) {
-      console.log('Created connection');
+      console.log('Connected to server');
+      this.send("Here's some text that the server is urgently awaiting!");
+
+      // on receiving messages from the server
+      // ws.onmessage = function (event) {
+      //   console.log(1);
+      // }
+
+
     };
 
   }
@@ -46,10 +54,12 @@ class App extends Component {
       username: this.state.currentUser.name,
       content: message
     }
+    this.connection.send(JSON.stringify(newMessage));
 
     this.setState({
       messages: this.state.messages.concat(newMessage)
     });
+
   }
 
 
