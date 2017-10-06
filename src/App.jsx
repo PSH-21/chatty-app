@@ -36,9 +36,9 @@ class App extends Component {
     }, 3000);
   }
 
-  uploadMessage = (user, message) => {
+  uploadMessage = (message) => {
     const newMessage = {
-      username: user,
+      username: this.state.currentUser.name,
       content: message
     }
 
@@ -47,6 +47,8 @@ class App extends Component {
     });
   }
 
+
+
   render() {
     return (
        <div>
@@ -54,7 +56,7 @@ class App extends Component {
             <a href='/' className="navbar-brand">Chatty</a>
           </nav>
           <MessageList messages={this.state.messages} />
-          <ChatBar uploadMessage={this.uploadMessage} />
+          <ChatBar currentUser={this.state.currentUser} uploadMessage={this.uploadMessage} />
       </div>
     );
   }
