@@ -5,6 +5,7 @@ import MessageList from './MessageList.jsx';
 class App extends Component {
   constructor(props) {
     super(props);
+    this.connection = new WebSocket('ws://localhost:3001');
     this.state = {
 
       currentUser: {name: "Bob"},
@@ -34,6 +35,10 @@ class App extends Component {
       // Calling setState will trigger a call to render() in App and all child components.
       this.setState({messages: messages})
     }, 3000);
+    this.connection.onopen = function (event) {
+      console.log('Created connection');
+    };
+
   }
 
   uploadMessage = (message) => {
