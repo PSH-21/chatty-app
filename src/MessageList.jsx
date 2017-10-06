@@ -5,8 +5,7 @@ class MessageList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
-      currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: {name: "Bob"},
       messages: [
         {
           id: 579318,
@@ -19,7 +18,7 @@ class MessageList extends Component {
           content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
         }
       ]
-    }
+    };
 
   }
 
