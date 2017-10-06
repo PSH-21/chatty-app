@@ -7,7 +7,7 @@ class App extends Component {
     super(props);
     this.state = {
 
-      currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: {name: "Bob"},
       messages: [
         {
           id: 1,
@@ -21,7 +21,6 @@ class App extends Component {
         }
       ]
     };
-     this.newMessage = this.newMessage.bind(this);
   }
 
   componentDidMount() {
@@ -37,6 +36,17 @@ class App extends Component {
     }, 3000);
   }
 
+  uploadMessage = (user, message) => {
+    const newMessage = {
+      username: user,
+      content: message
+    }
+
+    this.setState({
+      messages: this.state.messages.concat(newMessage)
+    });
+  }
+
   render() {
     return (
        <div>
@@ -44,7 +54,7 @@ class App extends Component {
             <a href='/' className="navbar-brand">Chatty</a>
           </nav>
           <MessageList messages={this.state.messages} />
-          <ChatBar/>
+          <ChatBar uploadMessage={this.uploadMessage} />
       </div>
     );
   }
