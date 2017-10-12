@@ -25,7 +25,7 @@ export default class App extends Component {
     }
 
     this.connection.onclose = (event) => {
-      this.setState({ offline: false });
+      this.setState({ online: false });
     }
 
     this.connection.onmessage = (event) => {
