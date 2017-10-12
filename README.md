@@ -1,19 +1,10 @@
-React Boilerplate
-=====================
+### General
 
-A minimal and light dev environment for ReactJS.
+Chat-room style application that tracks user messages and behaviors(ie. changing name) through web-sockets. Displays the current number of users and renders the message thread between users in the chat room in real-time.
 
-### Usage
 
-Clone the boilerplate and create your own git repo.
+[!'Screenshot of example order summary']
 
-```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
-```
 
 Install the dependencies and start the server.
 
@@ -43,3 +34,9 @@ npm run lint
 * Webpack
 * [babel-loader](https://github.com/babel/babel-loader)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+* wss
+
+### Server Dependencies
+* React
+* Express
+* Uuid

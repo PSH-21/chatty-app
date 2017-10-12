@@ -80,6 +80,7 @@ color: tomato;
   position: fixed;
   right: 0;
   top: 0;
+  display: inline-block;
 }
 
 .navbar-brand {
@@ -92,4 +93,12 @@ color: tomato;
   line-height: 60px;
   padding: 0 10px;
   text-decoration: none;
+}
+
+.user-count {
+  float:right;
+  padding-right: 30px;
+  font-size: 1.25em;
+  line-height: 70px;
+
 }

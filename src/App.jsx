@@ -5,50 +5,66 @@ import MessageList from './MessageList.jsx';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.connection = new WebSocket('ws://localhost:3001');
+    this.connection;
     this.state = {
 
-      currentUser: {name: "Bob"},
-      messages: []
+      currentUser: {name: "User1"},
+      messages: [],
     };
   }
 
   componentDidMount() {
     console.log("componentDidMount <App />");
-    setTimeout(() => {
-      console.log("Simulating incoming message");
-      // Add a new message to the list of messages in the data store
-      const newMessage = {id: 3, username: "Michelle", content: "Hello there!"};
-      const messages = this.state.messages.concat(newMessage)
-      // Update the state of the app component.
-      // Calling setState will trigger a call to render() in App and all child components.
-      this.setState({messages: messages})
-    }, 3000);
+    this.connection = new WebSocket('ws://localhost:3001');
     this.connection.onopen = function (event) {
       console.log('Connected to server');
-      this.send("Here's some text that the server is urgently awaiting!");
+      // this.send("Here's some text that the server is urgently awaiting!");
+    }
+    this.connection.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      switch(data.type) {
+        case "incomingMessage":
+        case "incomingNotification":
+          this.setState({messages: this.state.messages.concat(data)})
+          break;
+        case "userCountUpdate":
+          const userCount = this.setState.userCount;
+          this.setState({userCount: data.count})
+          break;
+        default:
+        // show an error in the console if the message type is unknown
+        throw new Error("Unknown event type " + data.type);
+    }
 
-      // on receiving messages from the server
-      // ws.onmessage = function (event) {
-      //   console.log(1);
-      // }
+
+    }
+  };
 
 
-    };
 
-  }
 
   uploadMessage = (message) => {
     const newMessage = {
       username: this.state.currentUser.name,
-      content: message
+      content: message,
+      type: "incomingMessage"
     }
     this.connection.send(JSON.stringify(newMessage));
+  }
 
+  updateName = (name) => {
+    const oldName = this.state.currentUser.name
     this.setState({
-      messages: this.state.messages.concat(newMessage)
-    });
-
+      currentUser: {
+        name
+    }})
+    const newMessage = {
+      username: name,
+      oldName: oldName,
+      type: 'incomingNotification'
+    }
+    console.log(`${oldName} has changed their name to ${name}`);
+    this.connection.send(JSON.stringify(newMessage));
   }
 
 
@@ -58,9 +74,10 @@ class App extends Component {
        <div>
           <nav className="navbar">
             <a href='/' className="navbar-brand">Chatty</a>
+            <span className="user-count"> {this.state.userCount} users online</span>
           </nav>
           <MessageList messages={this.state.messages} />
-          <ChatBar currentUser={this.state.currentUser} uploadMessage={this.uploadMessage} />
+          <ChatBar currentUser={this.state.currentUser} uploadMessage={this.uploadMessage} updateName={this.updateName}/>
       </div>
     );
   }
