@@ -3,7 +3,8 @@
 Chat-room style application that tracks user messages and behaviors(ie. changing name) through web-sockets. Displays the current number of users and renders the message thread between users in the chat room in real-time.
 
 
-[!'Screenshot of example order summary']
+[!'Screenshot of exchanging messages'](https://github.com/PSH-21/chatty-app/blob/master/docs/users-changing-names.png)
+[!'Screenshot of exchanging messages'](https://github.com/PSH-21/chatty-app/blob/master/docs/exchanging-messages.png)
 
 
 Install the dependencies and start the server.
