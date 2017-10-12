@@ -4,31 +4,35 @@ import React, {Component} from 'react';
 //     Anonymous1 changed their name to nomnom.
 // </div>
 
-class Message extends Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    const msg = this.props.msg;
-    // if ()
-    //   return (<div)
-    // else
-    return (
-      <main className="messages">
-        <div className="message">
-          { msg.type=='incomingNotification' && msg.oldName &&
-            <span><i>{msg.oldName} changed their name to {msg.username}</i></span>
-          }
-          { !msg.oldName &&
-            <div>
-            <span className="message-username">{msg.username}</span>
-            <span className="message-content">{msg.content}</span>
-            </div>
-          }
-        </div>
-      </main>
+export default class Message extends Component {
 
+  renderMessage() {
+    const { username, content } = this.props;
+    return (
+      <div className="message">
+        <span className="message-username">{username}</span>
+        <span className="message-content">{content}</span>
+      </div>
     )
   }
+
+  renderNotification() {
+    const { content } = this.props;
+    return (
+      <div className="message system">
+        <span className="message-content">{content}</span>
+      </div>
+    );
+  }
+
+  render() {
+    const { type } = this.props;
+    switch(type) {
+      case 'incomingMessage': return this.renderMessage();
+      case 'incomingNotification': return this.renderNotification();
+      default:
+        console.error(`Attempting to render a message of unknown type: ${type}`);
+        return null;
+    }
+  }
 }
-export default Message;
